@@ -1,0 +1,20 @@
+{
+  "name": "ayoub_boulbaz-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyoubHolmes/ayoub_boulbaz-SDK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyoubHolmes/ayoub_boulbaz-SDK/issues"
+  },
+  "homepage": "https://github.com/AyoubHolmes/ayoub_boulbaz-SDK#readme"
+}
