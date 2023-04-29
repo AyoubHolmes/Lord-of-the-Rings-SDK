@@ -8,7 +8,7 @@ export class Movies {
     return SDKClient.get<IAPIResponse<IMovie>>(`/${this.resourceName}/${id}`);
   }
 
-  getPosts(): Promise<IAPIResponse<IMovie> | void> {
+  getMovies(): Promise<IAPIResponse<IMovie> | void> {
     return SDKClient.get<IAPIResponse<IMovie>>(`/${this.resourceName}`);
   }
 }
