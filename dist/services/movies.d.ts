@@ -1,6 +1,7 @@
-import { IAPIResponse, IMovie } from 'src/types/movie';
+import { IMovie, IQuote } from 'src/types';
 export declare class Movies {
     resourceName: string;
-    getMovieById(id: number): Promise<IAPIResponse<IMovie> | void>;
-    getMovies(): Promise<IAPIResponse<IMovie> | void>;
+    getMovies(): Promise<IMovie[] | void>;
+    getMovieById(id: string): Promise<IMovie | void>;
+    getMovieQuotesById(id: string): Promise<IQuote[] | void>;
 }
