@@ -1,6 +1,8 @@
-import { IAPIResponse, IQuote } from 'src/types';
+import { IQuote } from 'src/types';
 export declare class Quotes {
     resourceName: string;
-    getQuoteById(id: number): Promise<IAPIResponse<IQuote> | void>;
-    getQuotes(): Promise<IAPIResponse<IQuote> | void>;
+    private movies;
+    constructor();
+    getQuoteById(id: string): Promise<IQuote | void>;
+    getQuotes(): Promise<IQuote[] | void>;
 }

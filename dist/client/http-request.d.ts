@@ -11,7 +11,7 @@ export declare class HttpClient {
     constructor(baseUrl: string);
     onSuccess<T>(result: AxiosResponse<T>): T;
     onError(error: AxiosError): void;
-    request<T>({ method, endPoint, data, params, responseType }: Request): Promise<T | void>;
+    request<T>({ method, endPoint, data, params, responseType, }: Request): Promise<T | void>;
     get<T>(endPoint: string, params?: any, responseType?: ResponseType): Promise<T | void>;
 }
 export declare const SDKClient: HttpClient;

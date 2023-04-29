@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosResponse, Method, ResponseType } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosResponse, Method, ResponseType } from 'axios';
+import { API_URL, BEARER_TOKEN } from 'src/constants';
 
 interface Request {
   method: Method;
@@ -22,13 +23,20 @@ export class HttpClient {
     throw error?.message;
   }
 
-  async request<T>({ method, endPoint, data, params, responseType }: Request): Promise<T | void> {
+  async request<T>({
+    method,
+    endPoint,
+    data,
+    params,
+    responseType,
+  }: Request): Promise<T | void> {
     const url = /^https?:\/\//.test(endPoint) ? endPoint : `${this.baseUrl}${endPoint}`;
-    return await axios({
+    return await axios<T>({
       method,
       url,
       responseType,
       data,
+      headers: {'Authorization': `Bearer ${BEARER_TOKEN}`} ,
       params,
       withCredentials: true,
     })
@@ -36,7 +44,11 @@ export class HttpClient {
       .catch(this.onError);
   }
 
-  async get<T>(endPoint: string, params?: any, responseType?: ResponseType): Promise<T | void> {
+  async get<T>(
+    endPoint: string,
+    params?: any,
+    responseType?: ResponseType,
+  ): Promise<T | void> {
     return await this.request<T>({
       method: 'get',
       endPoint,
@@ -46,4 +58,4 @@ export class HttpClient {
   }
 }
 
-export const SDKClient = new HttpClient('https://the-one-api.dev/v2');
+export const SDKClient = new HttpClient(API_URL);
