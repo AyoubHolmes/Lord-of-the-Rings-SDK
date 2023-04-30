@@ -31,6 +31,8 @@ export class HttpClient {
     responseType,
   }: Request): Promise<T | void> {
     const url = /^https?:\/\//.test(endPoint) ? endPoint : `${this.baseUrl}${endPoint}`;
+    if (BEARER_TOKEN === "")
+      throw "Bearer token not set";
     return await axios<T>({
       method,
       url,
