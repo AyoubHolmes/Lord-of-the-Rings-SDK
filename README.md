@@ -6,7 +6,7 @@ This Lord of the Rings SDK is a software development kit that allows developers 
 
 To install the SDK, simply run:
 ```
-npm install lord-of-the-rings-sdk
+npm install ayoub_boulbaz-sdk@0.1.20
 ```
 or:
 1.  Clone the SDK repository to your local machine using `git clone https://github.com/AyoubHolmes/ayoub_boulbaz-SDK.git`.
