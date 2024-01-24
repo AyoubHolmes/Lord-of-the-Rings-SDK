@@ -1,49 +1,60 @@
 import { SDKClient } from 'src/client';
 import { IAPIResponse, ICharacter, IMovie, IQuote } from 'src/types';
 
-export class Movies {
+interface IMoviesService {
+  getMovies(): Promise<IMovie[] | void>;
+  getMovieById(id: string): Promise<IMovie | void>;
+  getMovieQuotesById(id: string): Promise<IQuote[] | void>;
+}
+
+export class Movies implements IMoviesService {
   resourceName = 'movie';
 
-  getMovies(): Promise<IMovie[] | void> {
-    return SDKClient.get<IAPIResponse<IMovie>>(`/${this.resourceName}`).then((res) => {
+  async getMovies(): Promise<IMovie[] | void> {
+    try {
+      const res = await SDKClient.get<IAPIResponse<IMovie>>(`/${this.resourceName}`);
       if (typeof res !== 'undefined') {
         return res.docs;
       }
-    });
+    } catch (error) {
+      throw new Error(`Error in getMovies: ${error}`);
+    }
   }
 
-  getMovieById(id: string): Promise<IMovie | void> {
-    return SDKClient.get<IAPIResponse<IMovie>>(`/${this.resourceName}/${id}`).then((res) => {
+  async getMovieById(id: string): Promise<IMovie | void> {
+    try {
+      const res = await SDKClient.get<IAPIResponse<IMovie>>(`/${this.resourceName}/${id}`);
       if (typeof res !== 'undefined' && res.docs.length === 1) {
         return res.docs[0];
       }
-    });
+    } catch (error) {
+      throw new Error(`Error in getMovieById: ${error}`);
+    }
   }
 
   async getMovieQuotesById(id: string): Promise<IQuote[] | void> {
-    return await SDKClient.get<IAPIResponse<IQuote>>(`/${this.resourceName}/${id}/quote`).then(
-      async (res) => {
-        if (typeof res !== 'undefined') {
-          let quotes: IQuote[] = [];
-          for (const quote of res.docs) {
-            try {
-              let movieName = await this.getMovieById(quote.movie).then((movie) => {
-                if (typeof movie !== 'undefined') return movie.name;
-              });
-              let characterName = await SDKClient.get<IAPIResponse<ICharacter>>(
-                `/character/${quote.character}`,
-              ).then((character) => {
-                if (typeof character !== 'undefined' && character.docs.length === 1)
-                  return character.docs[0].name;
-              });
-              quotes.push({ ...quote, movie: movieName || '', character: characterName || '' });
-            } catch (err) {
-              throw err;
-            }
+    try {
+      const res = await SDKClient.get<IAPIResponse<IQuote>>(`/${this.resourceName}/${id}/quote`);
+      if (typeof res !== 'undefined') {
+        const quotes: IQuote[] = [];
+        for (const quote of res.docs) {
+          try {
+            const movieName = await this.getMovieById(quote.movie);
+            const characterName = await SDKClient.get<IAPIResponse<ICharacter>>(
+              `/character/${quote.character}`,
+            ).then((character) => {
+              if (typeof character !== 'undefined' && character.docs.length === 1)
+                return character.docs[0].name;
+            });
+            quotes.push({ ...quote, movie: movieName?.name || '', character: characterName || '' });
+          } catch (err) {
+            throw new Error(`Error in getMovieQuotesById (inner): ${err}`);
           }
-          return quotes;
         }
-      },
-    );
+        return quotes;
+      }
+    } catch (error) {
+      throw new Error(`Error in getMovieQuotesById (outer): ${error}`);
+    }
   }
 }
