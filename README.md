@@ -1,15 +1,16 @@
 # Ayoub Boulbaz's Lord of the Rings SDK!
 
 This Lord of the Rings SDK is a software development kit that allows developers to easily fetch data about the **Lord of the Rings** movies and quotes.
+You can check the latest stats related to the npm package: https://socket.dev/npm/package/ayoub_boulbaz-sdk
 
 # Installation
 
 To install the SDK, simply run:
 ```
-npm install ayoub_boulbaz-sdk@0.1.20
+npm install lord-of-the-rings-sdk
 ```
 or:
-1.  Clone the SDK repository to your local machine using `git clone https://github.com/AyoubHolmes/ayoub_boulbaz-SDK.git`.
+1.  Clone the SDK repository to your local machine using `git clone https://github.com/AyoubHolmes/Lord-of-the-Rings-SDK.git`.
 2.  Add your own API Key in the `src/constants.ts` file. 
 3.  Install the required dependencies by running `npm install`.
 4.  Once the dependencies are installed, you can start using the SDK in your own project
